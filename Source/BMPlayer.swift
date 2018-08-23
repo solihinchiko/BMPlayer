@@ -336,7 +336,7 @@ open class BMPlayer: UIView {
             UIApplication.shared.statusBarOrientation = .portrait
         } else {
             UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
-            UIApplication.shared.setStatusBarHidden(false, with: .fade)
+            UIApplication.shared.setStatusBarHidden(true, with: .fade)
             UIApplication.shared.statusBarOrientation = .landscapeRight
         }
     }
