@@ -15,7 +15,7 @@ public protocol BMPlayerDelegate : class {
     func bmPlayer(player: BMPlayer, playerStateDidChange state: BMPlayerState)
     func bmPlayer(player: BMPlayer, loadedTimeDidChange loadedDuration: TimeInterval, totalDuration: TimeInterval)
     func bmPlayer(player: BMPlayer, playTimeDidChange currentTime : TimeInterval, totalTime: TimeInterval)
-    func bmPlayer(player: BMPlayer, playerIsPlaying playing: Bool)
+    func bmPlayer(player: BMPlayer, playerIsPlaying playing: Bool, playTimeDidChange currentTime : TimeInterval)
     func bmPlayer(player: BMPlayer, playerOrientChanged isFullscreen: Bool)
 }
 
@@ -427,9 +427,9 @@ open class BMPlayer: UIView {
 }
 
 extension BMPlayer: BMPlayerLayerViewDelegate {
-    public func bmPlayer(player: BMPlayerLayerView, playerIsPlaying playing: Bool) {
+    public func bmPlayer(player: BMPlayerLayerView, playerIsPlaying playing: Bool, playTimeDidChange currentTime : TimeInterval) {
         controlView.playStateDidChange(isPlaying: playing)
-        delegate?.bmPlayer(player: self, playerIsPlaying: playing)
+        delegate?.bmPlayer(player: self, playerIsPlaying: playing, playTimeDidChange:currentTime)
         playStateDidChange?(player.isPlaying)
     }
     

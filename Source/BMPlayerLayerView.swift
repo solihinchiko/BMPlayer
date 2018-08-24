@@ -46,7 +46,7 @@ public protocol BMPlayerLayerViewDelegate : class {
     func bmPlayer(player: BMPlayerLayerView, playerStateDidChange state: BMPlayerState)
     func bmPlayer(player: BMPlayerLayerView, loadedTimeDidChange loadedDuration: TimeInterval, totalDuration: TimeInterval)
     func bmPlayer(player: BMPlayerLayerView, playTimeDidChange currentTime: TimeInterval, totalTime: TimeInterval)
-    func bmPlayer(player: BMPlayerLayerView, playerIsPlaying playing: Bool)
+    func bmPlayer(player: BMPlayerLayerView, playerIsPlaying playing: Bool, playTimeDidChange currentTime: TimeInterval)
 }
 
 open class BMPlayerLayerView: UIView {
@@ -82,7 +82,13 @@ open class BMPlayerLayerView: UIView {
     open var isPlaying: Bool = false {
         didSet {
             if oldValue != isPlaying {
-                delegate?.bmPlayer(player: self, playerIsPlaying: isPlaying)
+                var currentTime = 0.0
+                if let playerItem = self.playerItem {
+                    if playerItem.duration.timescale != 0 {
+                        currentTime = CMTimeGetSeconds(self.player!.currentTime())
+                    }
+                }
+                delegate?.bmPlayer(player: self, playerIsPlaying: isPlaying, playTimeDidChange:currentTime )
             }
         }
     }
