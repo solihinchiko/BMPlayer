@@ -319,6 +319,7 @@ open class BMPlayer: UIView {
             if (self.sumTime >= totalDuration) { self.sumTime = totalDuration }
             if (self.sumTime <= 0) { self.sumTime = 0 }
             
+            controlView.hidePlayToTheEndView()
             controlView.showSeekToView(to: sumTime, total: totalDuration, isAdd: value > 0)
         }
     }
@@ -513,14 +514,15 @@ extension BMPlayer: BMPlayerControlViewDelegate {
                 if button.isSelected {
                     pause()
                 } else {
+                    controlView.hidePlayToTheEndView()
                     if isPlayToTheEnd {
+                        isPlayToTheEnd = false
                         seek(0, completion: {
                             self.play()
                         })
-                        controlView.hidePlayToTheEndView()
-                        isPlayToTheEnd = false
+                    } else {
+                        play()
                     }
-                    play()
                 }
                 
             case .replay:
