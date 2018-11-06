@@ -197,6 +197,7 @@ open class BMPlayerControlView: UIView {
         titleLabel.text = resource.name
         prepareChooseDefinitionView()
         autoFadeOutControlViewWithAnimation()
+        hidePlayToTheEndView()
     }
     
     open func playStateDidChange(isPlaying: Bool) {
