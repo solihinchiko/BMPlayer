@@ -47,6 +47,7 @@ public protocol BMPlayerLayerViewDelegate : class {
     func bmPlayer(player: BMPlayerLayerView, loadedTimeDidChange loadedDuration: TimeInterval, totalDuration: TimeInterval)
     func bmPlayer(player: BMPlayerLayerView, playTimeDidChange currentTime: TimeInterval, totalTime: TimeInterval)
     func bmPlayer(player: BMPlayerLayerView, playerIsPlaying playing: Bool, playTimeDidChange currentTime: TimeInterval)
+    func bmPlayer(player: BMPlayerLayerView, seekTime fromTime: TimeInterval, toTime: TimeInterval)
 }
 
 open class BMPlayerLayerView: UIView {
@@ -226,6 +227,7 @@ open class BMPlayerLayerView: UIView {
         if self.player?.currentItem?.status == AVPlayerItemStatus.readyToPlay {
             let draggedTime = CMTimeMake(Int64(secounds), 1)
             self.player!.seek(to: draggedTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero, completionHandler: { (finished) in
+                self.delegate?.bmPlayer(player: self, seekTime: CMTimeGetSeconds(currentTime!), toTime: CMTimeGetSeconds(draggedTime))
                 completion?()
             })
         } else {

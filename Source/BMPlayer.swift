@@ -17,6 +17,7 @@ public protocol BMPlayerDelegate : class {
     func bmPlayer(player: BMPlayer, playTimeDidChange currentTime : TimeInterval, totalTime: TimeInterval)
     func bmPlayer(player: BMPlayer, playerIsPlaying playing: Bool, playTimeDidChange currentTime : TimeInterval)
     func bmPlayer(player: BMPlayer, playerOrientChanged isFullscreen: Bool)
+    func bmPlayer(player: BMPlayer, seekTime fromTime: TimeInterval, toTime: TimeInterval)
 }
 
 /**
@@ -486,6 +487,10 @@ extension BMPlayer: BMPlayerLayerViewDelegate {
         controlView.playTimeDidChange(currentTime: currentTime, totalTime: totalTime)
         controlView.totalDuration = totalDuration
         playTimeDidChange?(currentTime, totalTime)
+    }
+    
+    public func bmPlayer(player: BMPlayerLayerView, seekTime fromTime: TimeInterval, toTime: TimeInterval) {
+        delegate?.bmPlayer(player: self, seekTime: fromTime, toTime: toTime)
     }
 }
 
